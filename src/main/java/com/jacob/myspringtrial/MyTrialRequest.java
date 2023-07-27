@@ -8,11 +8,16 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class MyTrialRequest {
+
+
+
+
     private static final String hint = "this is a test,%s";
     private final AtomicLong counter = new AtomicLong();
     @GetMapping("/trial")
-    public myType myReturn(
+    public String myReturn(
         @RequestParam(value = "name", defaultValue = "nothing provided") String name){
-        return new myType(String.format(hint,name),counter.incrementAndGet());
+        //return String.format(hint,name),counter.incrementAndGet();
+        return "this a placeholder";
     }
 }
