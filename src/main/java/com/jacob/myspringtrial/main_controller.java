@@ -106,7 +106,7 @@ public class main_controller {
 
     @RequestMapping("/put_equip_detail")
     //更新设备状态
-    private String update_equip(
+    private String put_equip_detail(
             @RequestParam(name="subId",required =true) Integer subId,
             @RequestParam(name="deviceId",required =true) String deviceId,
             @RequestParam(name="name",required =true) String name,
@@ -140,7 +140,81 @@ public class main_controller {
 
 
         //get returns
-        JSONObject returns_json = (JSONObject) Objects.requireNonNull(Objects.requireNonNull(post("update_equip", (JSONObject) JSONObject.toJSON(equip_detail_to_put))).get("data"));
+        JSONObject returns_json = (JSONObject) Objects.requireNonNull(
+                Objects.requireNonNull(post("put_equip_detail", (JSONObject) JSONObject.toJSON(equip_detail_to_put))).get("data"));
+        return (String) returns_json.get("desc");
+    }
+
+
+    @RequestMapping("/put_alarm")
+    //更新设备状态
+    private String put_alarm(
+            @RequestParam(name="alarmType",required =true) int alarmType ,  //1-警告推送 2-警告解除
+            @RequestParam(name="deviceId",required =true) String deviceId,  //
+            @RequestParam(name="subCode",required =true) String subCode,  //
+            @RequestParam(name="isSubmersible",required =false) int isSubmersible,  //1-已漫水 2-即将漫水
+            @RequestParam(name="snapTime",required =true) String snapTime //格式：2023-07-20 15:30:30
+
+    ){
+        //set request params
+        JSONObject request_put_alarm = new JSONObject();
+        request_put_alarm.put("alarmType",alarmType);
+        request_put_alarm.put("deviceId",deviceId);
+        request_put_alarm.put("subCode",subCode);
+        request_put_alarm.put("isSubmersible",isSubmersible);
+        request_put_alarm.put("snapTime",snapTime);
+
+        //get returns
+        JSONObject returns_json = (JSONObject) Objects.requireNonNull(
+                Objects.requireNonNull(post("put_alarm", (JSONObject) JSONObject.toJSON(request_put_alarm))).get("data"));
+        return (String) returns_json.get("desc");
+    }
+
+    @RequestMapping("/put_online")
+    //更新设备状态
+    private String put_online(
+            @RequestParam(name="onlineType",required =true) int onlineType ,  //1-推送 2-解除
+            @RequestParam(name="deviceId",required =true) String deviceId,  //
+            @RequestParam(name="subCode",required =true) String subCode,  //
+            @RequestParam(name="snapTime",required =true) String snapTime  //格式：2023-07-20 15:30:30
+
+    ){
+        //set request params
+        JSONObject request_put_online = new JSONObject();
+
+        request_put_online.put("onlineType",onlineType);
+        request_put_online.put("deviceId",deviceId);
+        request_put_online.put("subCode",subCode);
+        request_put_online.put("snapTime",snapTime);
+
+        //get returns
+        JSONObject returns_json = (JSONObject) Objects.requireNonNull(
+                Objects.requireNonNull(post("put_online", (JSONObject) JSONObject.toJSON(request_put_online))).get("data"));
+        return (String) returns_json.get("desc");
+    }
+
+
+    @RequestMapping("/put_picture")
+    //更新设备状态
+    private String put_picture(
+            @RequestParam(name="deviceId",required =true) String deviceId,  //
+            @RequestParam(name="subCode",required =true) String subCode,  //
+            @RequestParam(name="snapTime",required =true) String snapTime,  //格式：2023-07-20 15:30:30
+            @RequestParam(name="snapData",required =true) String snapData  //图片需要转为 base64
+
+    ){
+        //set request params
+        JSONObject request_put_picture = new JSONObject();
+
+        request_put_picture.put("deviceId",deviceId);
+        request_put_picture.put("subCode",subCode);
+        request_put_picture.put("snapTime",snapTime);
+        request_put_picture.put("snapData",snapData);
+
+
+        //get returns
+        JSONObject returns_json = (JSONObject) Objects.requireNonNull(
+                Objects.requireNonNull(post("put_picture", (JSONObject) JSONObject.toJSON(request_put_picture))).get("data"));
         return (String) returns_json.get("desc");
     }
 
